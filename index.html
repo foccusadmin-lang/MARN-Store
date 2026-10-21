@@ -1,0 +1,387 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>MARN Store — um lugar de design</title>
+  <meta name="description" content="MARN Store — canecas e camisetas personalizadas, bíblias, agendas cristãs e kits presente. Do presente mais simples ao mais elegante.">
+  <meta name="theme-color" content="#1E1E21">
+
+  <!-- PWA / Android -->
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32.png">
+
+  <!-- iOS / iPadOS -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="MARN Store">
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Great+Vibes&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- Faixa de avisos -->
+  <div class="announce" aria-live="polite"><span id="announce-text"></span></div>
+
+  <!-- Cabeçalho -->
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <button class="icon-btn menu-btn" data-open="menu" aria-label="Abrir menu">
+        <svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+      </button>
+      <a href="#" class="logo" data-nav="home" aria-label="MARN Store - início">
+<img class="logo-emblem" src="brand/emblem.png" alt="" width="44" height="44"><img class="logo-name" src="brand/name.png" alt="MARN Store" width="150" height="16">
+      </a>
+
+      <label class="search">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 21l-4.3-4.3M11 18a7 7 0 1 1 0-14 7 7 0 0 1 0 14z"/></svg>
+        <input id="search" type="search" placeholder="O que você procura? Ex.: caneca, bíblia, kit…" autocomplete="off">
+      </label>
+
+      <nav class="top-actions">
+        <a href="#" class="account-link hide-mobile" data-nav="account">
+          <svg viewBox="0 0 24 24"><path d="M20 21a8 8 0 0 0-16 0M12 13a5 5 0 1 0 0-10 5 5 0 0 0 0 10z"/></svg>
+          <span><small>Olá! Entre ou</small><strong>Crie sua conta</strong></span>
+        </a>
+        <button class="icon-btn hide-mobile" data-nav="favorites" aria-label="Favoritos">
+          <svg viewBox="0 0 24 24"><path d="M12 21s-7.5-4.6-9.5-9.3C1.1 8.3 3.4 4.5 7 4.5c2 0 3.6 1.1 5 3 1.4-1.9 3-3 5-3 3.6 0 5.9 3.8 4.5 7.2C19.5 16.4 12 21 12 21z"/></svg>
+          <span class="badge" data-count="fav">0</span>
+        </button>
+        <button class="icon-btn" data-open="cart" aria-label="Carrinho">
+          <svg viewBox="0 0 24 24"><path d="M3 4h2l2.4 11.2a2 2 0 0 0 2 1.6h7.7a2 2 0 0 0 2-1.5L21 8H6.2M9 21h.01M18 21h.01"/></svg>
+          <span class="badge" data-count="cart">0</span>
+        </button>
+      </nav>
+    </div>
+
+    <!-- Menu principal (desktop) -->
+    <nav class="mainnav" aria-label="Categorias">
+      <div class="container mainnav-inner" id="mainnav"></div>
+    </nav>
+  </header>
+
+  <main id="app">
+    <!-- ================= INÍCIO ================= -->
+    <section id="view-home" class="view active">
+      <!-- Carrossel -->
+      <div class="container">
+        <div class="carousel" id="carousel">
+          <div class="slides" id="slides"></div>
+          <button class="car-btn prev" data-car="-1" aria-label="Anterior">‹</button>
+          <button class="car-btn next" data-car="1" aria-label="Próximo">›</button>
+          <div class="dots" id="dots"></div>
+        </div>
+      </div>
+
+      <!-- Selos de confiança -->
+      <div class="container">
+        <ul class="trust">
+          <li><span>🔒</span><div><strong>Compra segura</strong><small>Seus dados protegidos</small></div></li>
+          <li><span>💳</span><div><strong>Parcele em até 12x</strong><small>no cartão de crédito</small></div></li>
+          <li><span>⚡</span><div><strong>5% off no Pix</strong><small>desconto automático</small></div></li>
+          <li><span>🔄</span><div><strong>Troca grátis</strong><small>em até 7 dias</small></div></li>
+        </ul>
+      </div>
+
+      <div class="container" id="home-sections"></div>
+
+      <!-- Públicos -->
+      <div class="container">
+        <div class="section-head"><h2>Presentes para cada estilo</h2></div>
+        <div class="audiences">
+          <button class="aud-card" data-filter='{"audience":"Teens"}' style="--aud:var(--aqua-deep)"><strong>Teens</strong><small>Estampas criativas e kits cheios de vibe</small></button>
+          <button class="aud-card" data-filter='{"audience":"Adulto"}' style="--aud:var(--copper-deep)"><strong>Adulto</strong><small>Presentes sofisticados e rústicos</small></button>
+          <button class="aud-card" data-filter='{"audience":"Cristão"}' style="--aud:var(--charcoal)"><strong>Cristão</strong><small>Bíblias, agendas, versículos e kits de fé</small></button>
+        </div>
+      </div>
+
+      <!-- Loja física -->
+      <div class="container">
+        <section class="store" id="loja-fisica">
+          <div class="store-art" aria-hidden="true">🏬</div>
+          <div class="store-info">
+            <span class="script">nossa loja física</span>
+            <h2>Venha conhecer nosso espaço</h2>
+            <p class="muted">Um ambiente rústico e aconchegante para ver, tocar e escolher o presente perfeito — e acompanhar a personalização.</p>
+            <ul class="store-feats">
+              <li>🪵 Prateleiras rústicas</li>
+              <li>🛠️ Bancada de personalização</li>
+              <li>🏛️ Mezanino</li>
+              <li>✨ Expositor de presentes</li>
+            </ul>
+            <p class="small muted" data-store="address"></p>
+            <div class="hero-cta">
+              <a class="btn btn-primary" data-store="whats" target="_blank" rel="noopener">Falar no WhatsApp</a>
+              <a class="btn btn-ghost" data-store="map" target="_blank" rel="noopener">Como chegar</a>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <!-- Newsletter + Instagram -->
+      <div class="container">
+        <div class="news">
+          <div>
+            <h2>Receba todas as promoções</h2>
+            <p>Cadastre seu e-mail e ganhe <strong>10% OFF</strong> na primeira compra.</p>
+          </div>
+          <form id="news-form" class="news-form">
+            <input id="news-email" type="email" required placeholder="Seu melhor e-mail" aria-label="E-mail">
+            <button class="btn btn-primary" type="submit">Quero receber</button>
+          </form>
+        </div>
+        <a class="insta" data-store="insta" target="_blank" rel="noopener">
+          <span class="insta-icon">📸</span>
+          <span><strong>Siga a MARN Store no Instagram</strong><small data-store="insta-handle"></small></span>
+          <span class="btn btn-dark">Seguir</span>
+        </a>
+      </div>
+    </section>
+
+    <!-- ================= CATÁLOGO ================= -->
+    <section id="view-catalog" class="view">
+      <div class="container">
+        <nav class="crumbs" aria-label="Você está em"><a href="#" data-nav="home">Início</a> › <span id="cat-crumb">Produtos</span></nav>
+        <div class="section-head">
+          <div><h1 id="cat-title">Todos os produtos</h1><p class="muted small" id="cat-count"></p></div>
+          <select id="sort" aria-label="Ordenar">
+            <option value="relevance">Mais relevantes</option>
+            <option value="best">Mais vendidos</option>
+            <option value="price-asc">Menor preço</option>
+            <option value="price-desc">Maior preço</option>
+            <option value="off">Maior desconto</option>
+            <option value="name">Nome A–Z</option>
+          </select>
+        </div>
+        <div id="cat-chips" class="chips"></div>
+        <div id="aud-chips" class="chips audience"></div>
+        <div id="grid" class="grid"></div>
+        <p id="empty" class="empty" hidden>Nenhum produto encontrado. Tente outra busca ou <a href="#" data-filter='{}'>veja todos os produtos</a>.</p>
+      </div>
+    </section>
+
+    <!-- ================= FAVORITOS ================= -->
+    <section id="view-favorites" class="view">
+      <div class="container">
+        <div class="section-head"><h1>Meus favoritos</h1></div>
+        <div id="fav-grid" class="grid"></div>
+        <p id="fav-empty" class="empty" hidden>Você ainda não favoritou nenhum produto. Toque no ♥ para salvar.</p>
+      </div>
+    </section>
+
+    <!-- ================= CONTA ================= -->
+    <section id="view-account" class="view">
+      <div class="container narrow">
+        <div class="section-head"><h1>Minha conta</h1></div>
+        <div class="card">
+          <h3>Meus dados</h3>
+          <p class="muted small">Salvos neste dispositivo para agilizar suas compras.</p>
+          <form id="profile-form" class="form">
+            <label>Nome<input id="pf-name" name="name" required autocomplete="name"></label>
+            <label>WhatsApp<input id="pf-phone" name="phone" type="tel" required autocomplete="tel" placeholder="(11) 99999-9999"></label>
+            <label>CEP<input id="pf-cep" name="cep" inputmode="numeric" autocomplete="postal-code" placeholder="00000-000"></label>
+            <label>Endereço<input id="pf-address" name="address" autocomplete="street-address" placeholder="Rua, número, bairro, cidade"></label>
+            <button class="btn btn-primary" type="submit">Salvar</button>
+          </form>
+        </div>
+        <div class="card">
+          <h3>Meus pedidos</h3>
+          <ul id="orders" class="orders"></ul>
+        </div>
+        <div class="card">
+          <h3>Instale o app MARN Store</h3>
+          <p class="muted small">
+            <strong>Android / Chrome / Edge:</strong> menu ⋮ → “Instalar aplicativo”.<br>
+            <strong>iPhone / iPad (Safari):</strong> Compartilhar → “Adicionar à Tela de Início”.<br>
+            <strong>Computador:</strong> ícone de instalação na barra de endereço.
+          </p>
+          <button id="install-btn" class="btn btn-dark" hidden>Instalar app</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= RASTREIO ================= -->
+    <section id="view-track" class="view">
+      <div class="container narrow">
+        <div class="section-head"><h1>Rastreie seu pedido</h1></div>
+        <div class="card">
+          <p class="muted">Informe o número do pedido ou o código de rastreio dos Correios.</p>
+          <form id="track-form" class="form">
+            <label>Número do pedido ou código de rastreio<input id="track-code" name="code" required placeholder="Ex.: 123456 ou AA123456789BR"></label>
+            <button class="btn btn-primary" type="submit">Rastrear</button>
+          </form>
+          <div id="track-result" class="track-result" hidden></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= CONTATO ================= -->
+    <section id="view-contact" class="view">
+      <div class="container narrow">
+        <div class="section-head"><h1>Fale conosco</h1></div>
+        <div class="contact-grid">
+          <a class="card contact" data-store="whats" target="_blank" rel="noopener"><span>💬</span><strong>WhatsApp</strong><small>Atendimento rápido</small></a>
+          <a class="card contact" data-store="insta" target="_blank" rel="noopener"><span>📸</span><strong>Instagram</strong><small data-store="insta-handle"></small></a>
+          <a class="card contact" data-store="map" target="_blank" rel="noopener"><span>📍</span><strong>Loja física</strong><small data-store="address-short"></small></a>
+        </div>
+        <div class="card">
+          <h3>Envie uma mensagem</h3>
+          <form id="contact-form" class="form">
+            <label>Nome<input id="ct-name" name="name" required></label>
+            <label>Assunto<input id="ct-subject" name="subject" required placeholder="Ex.: orçamento de brindes para evento"></label>
+            <label>Mensagem<textarea id="ct-msg" name="msg" rows="4" required></textarea></label>
+            <button class="btn btn-primary" type="submit">Enviar pelo WhatsApp</button>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= PÁGINAS INSTITUCIONAIS ================= -->
+    <section id="view-info" class="view">
+      <div class="container narrow"><div class="card prose" id="info-body"></div></div>
+    </section>
+  </main>
+
+  <!-- Rodapé -->
+  <footer class="footer">
+    <div class="container footer-grid">
+      <div class="footer-brand">
+        <a href="#" class="logo" data-nav="home"><img class="logo-emblem" src="brand/emblem.png" alt="" width="44" height="44"><img class="logo-name" src="brand/name.png" alt="MARN Store" width="150" height="16"></a>
+        <img class="footer-tagline" src="brand/tagline.png" alt="um lugar de design" width="180" height="29">
+        <p>Presentes personalizados com estilo sofisticado e rústico. Do mais simples ao mais elegante.</p>
+        <div class="social">
+          <a data-store="insta" target="_blank" rel="noopener" aria-label="Instagram">📸</a>
+          <a data-store="whats" target="_blank" rel="noopener" aria-label="WhatsApp">💬</a>
+        </div>
+      </div>
+      <div>
+        <h4>Categorias</h4>
+        <ul id="footer-cats"></ul>
+      </div>
+      <div>
+        <h4>Institucional</h4>
+        <ul>
+          <li><a href="#" data-info="sobre">Sobre a MARN Store</a></li>
+          <li><a href="#" data-info="trocas">Trocas e devoluções</a></li>
+          <li><a href="#" data-info="entrega">Prazos e entregas</a></li>
+          <li><a href="#" data-info="privacidade">Política de privacidade</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Atendimento</h4>
+        <ul>
+          <li><a href="#" data-nav="contact">Fale conosco</a></li>
+          <li><a href="#" data-nav="track">Rastreie seu pedido</a></li>
+          <li><a href="#" data-nav="account">Minha conta</a></li>
+          <li class="muted" data-store="hours"></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Pagamento</h4>
+        <div class="pay-icons"><span>Pix</span><span>Visa</span><span>Master</span><span>Elo</span><span>Boleto</span></div>
+        <h4 style="margin-top:16px">Segurança</h4>
+        <div class="pay-icons"><span>🔒 Site seguro</span></div>
+      </div>
+    </div>
+    <div class="container footer-bottom">
+      <p>© <span id="year"></span> MARN Store · Todos os direitos reservados.</p>
+      <p data-store="address"></p>
+    </div>
+  </footer>
+
+  <!-- WhatsApp flutuante -->
+  <a class="whats-float" data-store="whats" target="_blank" rel="noopener" aria-label="Fale conosco pelo WhatsApp">
+    <svg viewBox="0 0 24 24"><path d="M20.5 11.6a8.5 8.5 0 0 1-12.6 7.4L3.5 20.5l1.5-4.3A8.5 8.5 0 1 1 20.5 11.6z"/><path d="M9 8.5c0 3.5 2.6 6.4 6.3 6.6l1-1.5-2-1-1 .8c-1.1-.5-2.1-1.4-2.6-2.6l.8-1-1-2z"/></svg>
+  </a>
+
+  <!-- Navegação inferior (celular) -->
+  <nav class="bottom-nav" aria-label="Navegação">
+    <button data-nav="home" class="active"><svg viewBox="0 0 24 24"><path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg>Início</button>
+    <button data-open="menu"><svg viewBox="0 0 24 24"><path d="M4 5h6v6H4zM14 5h6v6h-6zM4 15h6v6H4zM14 15h6v6h-6z"/></svg>Categorias</button>
+    <button data-nav="favorites"><svg viewBox="0 0 24 24"><path d="M12 21s-7.5-4.6-9.5-9.3C1.1 8.3 3.4 4.5 7 4.5c2 0 3.6 1.1 5 3 1.4-1.9 3-3 5-3 3.6 0 5.9 3.8 4.5 7.2C19.5 16.4 12 21 12 21z"/></svg>Favoritos</button>
+    <button data-open="cart"><svg viewBox="0 0 24 24"><path d="M3 4h2l2.4 11.2a2 2 0 0 0 2 1.6h7.7a2 2 0 0 0 2-1.5L21 8H6.2M9 21h.01M18 21h.01"/></svg>Carrinho<span class="badge" data-count="cart">0</span></button>
+    <button data-nav="account"><svg viewBox="0 0 24 24"><path d="M20 21a8 8 0 0 0-16 0M12 13a5 5 0 1 0 0-10 5 5 0 0 0 0 10z"/></svg>Conta</button>
+  </nav>
+
+  <!-- Menu lateral (celular) -->
+  <div id="menu" class="drawer left" hidden>
+    <div class="sheet-backdrop" data-close></div>
+    <aside class="drawer-panel" role="dialog" aria-modal="true" aria-label="Menu">
+      <div class="drawer-head">
+        <a href="#" class="logo" data-nav="home"><img class="logo-emblem" src="brand/emblem.png" alt="" width="44" height="44"><img class="logo-name" src="brand/name.png" alt="MARN Store" width="150" height="16"></a>
+        <button class="sheet-close" data-close aria-label="Fechar">✕</button>
+      </div>
+      <div class="menu-body" id="menu-body"></div>
+    </aside>
+  </div>
+
+  <!-- Espiar / detalhe do produto -->
+  <div id="product-modal" class="sheet" hidden>
+    <div class="sheet-backdrop" data-close></div>
+    <div class="sheet-panel" role="dialog" aria-modal="true" aria-labelledby="pm-title">
+      <button class="sheet-close" data-close aria-label="Fechar">✕</button>
+      <div id="pm-body"></div>
+    </div>
+  </div>
+
+  <!-- Carrinho -->
+  <div id="cart" class="drawer" hidden>
+    <div class="sheet-backdrop" data-close></div>
+    <aside class="drawer-panel" role="dialog" aria-modal="true" aria-label="Carrinho">
+      <div class="drawer-head">
+        <h2>Seu carrinho</h2>
+        <button class="sheet-close" data-close aria-label="Fechar">✕</button>
+      </div>
+      <div class="ship-meter" id="ship-meter"></div>
+      <div id="cart-items" class="cart-items"></div>
+      <div class="drawer-foot">
+        <div class="row"><span>Subtotal</span><strong id="cart-subtotal">R$ 0,00</strong></div>
+        <div class="row muted"><span>Frete</span><span id="cart-shipping">—</span></div>
+        <div class="row total"><span>Total</span><strong id="cart-total">R$ 0,00</strong></div>
+        <p class="muted small" id="pix-total"></p>
+        <button id="checkout-btn" class="btn btn-primary btn-block">Finalizar compra</button>
+        <button class="btn btn-link" data-close>Continuar comprando</button>
+      </div>
+    </aside>
+  </div>
+
+  <!-- Checkout -->
+  <div id="checkout" class="sheet" hidden>
+    <div class="sheet-backdrop" data-close></div>
+    <div class="sheet-panel" role="dialog" aria-modal="true" aria-label="Finalizar compra">
+      <button class="sheet-close" data-close aria-label="Fechar">✕</button>
+      <h2>Finalizar compra</h2>
+      <form id="checkout-form" class="form">
+        <label>Nome completo<input id="co-name" name="name" required autocomplete="name"></label>
+        <label>WhatsApp<input id="co-phone" name="phone" type="tel" required autocomplete="tel" placeholder="(11) 99999-9999"></label>
+        <label>CEP<input id="co-cep" name="cep" inputmode="numeric" required autocomplete="postal-code" placeholder="00000-000"></label>
+        <label>Endereço de entrega<input id="co-address" name="address" required autocomplete="street-address" placeholder="Rua, número, bairro, cidade"></label>
+        <fieldset class="pay">
+          <legend>Pagamento</legend>
+          <label><input type="radio" name="payment" value="Pix" checked> Pix (5% off)</label>
+          <label><input type="radio" name="payment" value="Cartão de crédito"> Cartão de crédito (até 12x)</label>
+          <label><input type="radio" name="payment" value="Boleto"> Boleto</label>
+        </fieldset>
+        <div class="row total"><span>Total</span><strong id="checkout-total"></strong></div>
+        <button class="btn btn-primary btn-block" type="submit">Enviar pedido pelo WhatsApp</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Aviso de cookies -->
+  <div class="cookie" id="cookie" hidden>
+    <p>Usamos cookies para melhorar sua experiência. Ao continuar navegando, você concorda com nossa <a href="#" data-info="privacidade">política de privacidade</a>.</p>
+    <button class="btn btn-dark" id="cookie-ok">Entendi</button>
+  </div>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <script src="config.js"></script>
+  <script src="products.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

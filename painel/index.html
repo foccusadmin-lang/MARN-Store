@@ -1,0 +1,308 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>MARN Store · Obra</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Great+Vibes&family=DM+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: caderno de obra da loja — cabeçalho com avanço geral, pré-visualização viva do app e linha do tempo das etapas */
+:root {
+  --bg: #F7F4F0;          /* off-white quente */
+  --paper: #FFFFFF;
+  --ink: #1E1E21;         /* grafite da logo */
+  --soft: #6E6A6C;
+  --rule: #E8E2DB;
+  --kraft: #A0663D;       /* bronze */
+  --sky: #3F7F84;         /* azul-água profundo */
+  --violet: #A0663D;
+  --orange: #B5763F;
+  --magenta: #3F7F84;
+  --ok: #2F8F5B;
+  --ok-bg: #E3F3EA;
+  --wip-bg: #FDEBD7;
+  --todo-bg: #E4F0F0;
+  --frame: #1E1E21;
+  --grad: linear-gradient(100deg, #A0663D, #E3B48E 45%, #C98B5E 60%, #A0663D);
+  --display: "Montserrat", system-ui, sans-serif;
+  --script: "Great Vibes", "Brush Script MT", cursive;
+  --body: "Montserrat", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono: "DM Mono", ui-monospace, Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #141416; --paper: #1E1E21; --ink: #F1EEEA; --soft: #A7A3A5; --rule: #2E2E33; --kraft: #E3B48E;
+    --sky: #8FC4C6; --violet: #E3B48E; --orange: #E3B48E; --magenta: #8FC4C6;
+    --ok: #6CCB97; --ok-bg: #1D3328; --wip-bg: #3A2A17; --todo-bg: #1F3233; --frame: #0B0B0C;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #141416; --paper: #1E1E21; --ink: #F1EEEA; --soft: #A7A3A5; --rule: #2E2E33; --kraft: #E3B48E;
+  --sky: #8FC4C6; --violet: #E3B48E; --orange: #E3B48E; --magenta: #8FC4C6;
+  --ok: #6CCB97; --ok-bg: #1D3328; --wip-bg: #3A2A17; --todo-bg: #1F3233; --frame: #0B0B0C;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg); color: var(--ink); font-family: var(--body); font-size: 15px; line-height: 1.55;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 0 56px;
+}
+.wrap { max-width: 1140px; margin: 0 auto; display: grid; gap: 40px; }
+h1, h2, h3 { font-family: var(--display); font-weight: 700; margin: 0; letter-spacing: -.01em; text-wrap: balance; }
+h2 { font-size: 1.55rem; }
+.label { font-family: var(--mono); font-size: .72rem; letter-spacing: .1em; text-transform: uppercase; color: var(--soft); }
+.muted { color: var(--soft); }
+a { color: var(--violet); }
+button:focus-visible, a:focus-visible { outline: 2px solid var(--violet); outline-offset: 2px; }
+
+/* Cabeçalho */
+.head { padding-top: 36px; display: grid; grid-template-columns: 1fr auto; gap: 28px; align-items: end; }
+.brand { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; }
+.mark { width: 52px; height: 52px; border-radius: 12px; background: #1E1E21; padding: 6px; object-fit: contain; }
+.head h1 { font-size: clamp(2rem, 5vw, 3.1rem); line-height: 1.05; }
+.head h1 em { font-family: var(--script); font-style: normal; font-weight: 400; color: var(--sky); font-size: 1.15em; }
+.head p { max-width: 58ch; margin: 12px 0 0; color: var(--soft); }
+.meter { min-width: 230px; display: grid; gap: 8px; }
+.meter-num { font-family: var(--display); font-size: 3.4rem; line-height: 1; font-variant-numeric: tabular-nums; }
+.meter-num small { font-size: 1.2rem; color: var(--soft); }
+.bar { height: 10px; border-radius: 99px; background: var(--rule); overflow: hidden; }
+.bar i { display: block; height: 100%; background: var(--grad); border-radius: 99px; }
+.stripe { height: 4px; background: var(--grad); border-radius: 99px; }
+
+/* Pré-visualização */
+.preview { display: grid; gap: 16px; }
+.preview-top { display: flex; justify-content: space-between; align-items: end; gap: 16px; flex-wrap: wrap; }
+.seg { display: inline-flex; background: var(--paper); border: 1px solid var(--rule); border-radius: 99px; padding: 4px; gap: 2px; }
+.seg button { border: 0; background: none; color: var(--soft); font: 600 .88rem var(--body); padding: 8px 16px; border-radius: 99px; cursor: pointer; }
+.seg button[aria-pressed="true"] { background: var(--frame); color: #fff; }
+.stage { background: var(--paper); border: 1px solid var(--rule); border-radius: 20px; padding: 24px 16px; display: grid; justify-items: center; overflow: hidden; }
+.device { background: var(--frame); padding: 12px; border-radius: 34px; box-shadow: 0 20px 50px rgba(36, 27, 53, .18); transform-origin: top center; }
+.device.desktop { border-radius: 14px; padding: 28px 8px 8px; position: relative; }
+.device.desktop::before { content: "● ● ●"; position: absolute; top: 6px; left: 14px; color: #8a7fa3; font-size: .6rem; letter-spacing: 2px; }
+.device iframe { display: block; border: 0; border-radius: 24px; background: #F7F4F0; }
+.device.desktop iframe { border-radius: 6px; }
+.scaler { width: 100%; display: grid; justify-items: center; }
+.hint { font-size: .85rem; }
+
+/* Etapas */
+.grid2 { display: grid; grid-template-columns: 1.35fr 1fr; gap: 32px; align-items: start; }
+.grid2 > * { min-width: 0; }
+.steps { list-style: none; padding: 0; margin: 16px 0 0; display: grid; }
+.step { display: grid; grid-template-columns: 26px 1fr auto; gap: 14px; padding: 14px 0; border-top: 1px solid var(--rule); align-items: start; }
+.step:last-child { border-bottom: 1px solid var(--rule); }
+.dot { width: 22px; height: 22px; border-radius: 50%; display: grid; place-items: center; font-size: .75rem; font-weight: 700; margin-top: 2px; }
+.done .dot { background: var(--ok); color: var(--paper); }
+.wip .dot { background: var(--orange); color: var(--paper); }
+.todo .dot { border: 2px dashed var(--soft); }
+.step h3 { font-family: var(--body); font-size: 1rem; font-weight: 600; }
+.step p { margin: 2px 0 0; color: var(--soft); font-size: .9rem; }
+.chip { font: 500 .72rem var(--mono); letter-spacing: .04em; padding: 4px 9px; border-radius: 99px; white-space: nowrap; }
+.done .chip { background: var(--ok-bg); color: var(--ok); }
+.wip .chip { background: var(--wip-bg); color: var(--orange); }
+.todo .chip { background: var(--todo-bg); color: var(--violet); }
+
+/* Lateral */
+.side { display: grid; gap: 24px; }
+.box { background: var(--paper); border: 1px solid var(--rule); border-radius: 16px; padding: 20px; display: grid; gap: 12px; }
+.box h3 { font-size: 1.15rem; }
+.need { list-style: none; padding: 0; margin: 0; display: grid; gap: 10px; }
+.need li { display: grid; grid-template-columns: 18px 1fr; gap: 10px; font-size: .92rem; }
+.need li::before { content: ""; width: 14px; height: 14px; margin-top: 4px; border: 2px solid var(--orange); border-radius: 4px; }
+.log { list-style: none; padding: 0; margin: 0; display: grid; gap: 12px; }
+.log li { display: grid; gap: 2px; font-size: .9rem; }
+.log time { font: .74rem var(--mono); color: var(--soft); }
+
+/* Identidade */
+.brandrow { display: grid; grid-template-columns: 1fr 1.3fr; gap: 16px; margin-top: 16px; align-items: stretch; }
+.brandrow > * { min-width: 0; }
+.logo-card { background: #1E1E21; border-radius: 14px; display: grid; place-items: center; padding: 24px; }
+.logo-card img { width: min(300px, 100%); }
+.swatches { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+.sw { border-radius: 14px; overflow: hidden; border: 1px solid var(--rule); background: var(--paper); }
+.sw div { height: 86px; }
+.sw p { margin: 0; padding: 10px 12px; display: grid; font-size: .9rem; font-weight: 600; }
+.sw code { font: .76rem var(--mono); color: var(--soft); font-weight: 400; }
+.facts { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 16px; }
+.fact { border-top: 3px solid var(--kraft); padding-top: 12px; display: grid; gap: 6px; }
+.fact ul { margin: 0; padding-left: 18px; color: var(--soft); font-size: .92rem; }
+
+footer { font-size: .85rem; color: var(--soft); border-top: 1px solid var(--rule); padding-top: 16px; }
+
+@media (max-width: 860px) {
+  .head, .grid2 { grid-template-columns: 1fr; }
+  .meter { min-width: 0; }
+  .brandrow { grid-template-columns: 1fr; }
+  .facts { grid-template-columns: 1fr; }
+}
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+<style>body{margin:0}</style>
+</head>
+<body>
+
+
+<div class="wrap">
+  <header class="head">
+    <div>
+      <div class="brand"><img class="mark" src="../brand/emblem.png" alt=""><span class="label">Painel do projeto · Web + App</span></div>
+      <h1>MARN Store, <em>em construção</em></h1>
+      <p>Acompanhe aqui cada etapa do site e aplicativo da MARN Store: canecas e camisetas personalizadas, bíblias e kits presente. Esta página é atualizada a cada avanço.</p>
+    </div>
+    <div class="meter">
+      <span class="label">Avanço geral</span>
+      <span class="meter-num" id="pct">0<small>%</small></span>
+      <div class="bar"><i id="pct-bar" style="width:0%"></i></div>
+      <span class="muted" id="pct-txt"></span>
+    </div>
+  </header>
+
+  <div class="stripe" aria-hidden="true"></div>
+
+  <section class="preview" id="previa">
+    <div class="preview-top">
+      <div>
+        <span class="label">Versão atual · funcional</span>
+        <h2>Pré-visualização do app</h2>
+      </div>
+      <div class="seg" role="group" aria-label="Tamanho da tela">
+        <button id="dev-phone" data-dev="phone" aria-pressed="true">Celular</button>
+        <button id="dev-tablet" data-dev="tablet" aria-pressed="false">Tablet</button>
+        <button id="dev-desktop" data-dev="desktop" aria-pressed="false">Computador</button>
+      </div>
+    </div>
+    <div class="stage">
+      <div class="scaler" id="scaler">
+        <div class="device" id="device"><iframe id="app" src="../index.html" title="Pré-visualização da MARN Store"></iframe></div>
+      </div>
+    </div>
+    <p class="hint"><a href="../" target="_blank" rel="noopener">Abrir o app em tela cheia ›</a> (bom para testar no celular)</p>
+    <p class="hint muted">É o app de verdade: dá para navegar, buscar, filtrar por público, personalizar um produto e montar o carrinho. Os produtos, preços, endereço e WhatsApp ainda são exemplos.</p>
+  </section>
+
+  <section class="grid2" id="etapas">
+    <div>
+      <span class="label">Roteiro</span>
+      <h2>Etapas da construção</h2>
+      <ol class="steps" id="steps"></ol>
+    </div>
+    <aside class="side">
+      <div class="box">
+        <h3>Precisamos de vocês</h3>
+        <p class="muted" style="margin:0;font-size:.9rem">Itens para trocar os exemplos pelos dados reais da loja.</p>
+        <ul class="need" id="need"></ul>
+      </div>
+      <div class="box">
+        <h3>Diário de obra</h3>
+        <ul class="log" id="log"></ul>
+      </div>
+    </aside>
+  </section>
+
+  <section id="identidade">
+    <span class="label">Identidade oficial</span>
+    <h2>Logo e paleta</h2>
+    <div class="brandrow">
+      <div class="logo-card"><img src="../brand/logo-full.png" alt="Logo MARN Store — um lugar de design"></div>
+      <div class="swatches">
+        <div class="sw"><div style="background:#1E1E21"></div><p>Grafite <code>#1E1E21</code></p></div>
+        <div class="sw"><div style="background:linear-gradient(100deg,#A0663D,#E3B48E 45%,#C98B5E 60%,#A0663D)"></div><p>Bronze / rose gold <code>#C98B5E</code></p></div>
+        <div class="sw"><div style="background:linear-gradient(100deg,#9EA1A6,#ECEDEF 50%,#C9CBCF)"></div><p>Prata <code>#C9CBCF</code></p></div>
+        <div class="sw"><div style="background:#8FC4C6"></div><p>Azul-água <code>#8FC4C6</code></p></div>
+      </div>
+    </div>
+    <p class="muted" style="max-width:65ch">O grafite domina cabeçalho, rodapé e banners. O bronze é a cor de destaque (botões, preços em oferta, detalhes metálicos). A prata aparece nos textos sobre fundo escuro, e o azul-água fica com as frases em letra cursiva, como no “um lugar de design”. Tipografia: Montserrat (como o nome na logo) e Great Vibes (cursiva).</p>
+    <div class="facts">
+      <div class="fact"><h3>Produtos</h3><ul><li>Canecas (10 temas), xícaras e taças</li><li>Camisetas personalizadas</li><li>Bíblias, agendas e cadernos</li><li>Kits presente, almofadas, decoração e brindes</li></ul></div>
+      <div class="fact"><h3>Públicos</h3><ul><li>Teens</li><li>Adulto</li><li>Cristão</li></ul></div>
+      <div class="fact"><h3>Loja física</h3><ul><li>Prateleiras</li><li>Bancada</li><li>Mezanino</li><li>Expositor</li><li>Pequeno estoque</li></ul></div>
+    </div>
+  </section>
+
+  <footer>MARN Store · painel atualizado em <span id="updated"></span></footer>
+</div>
+
+<script>
+const PROJECT = {
+  updated: "21/10/2026",
+  steps: [
+    { s: "done", t: "Identidade oficial aplicada", d: "Logo da pomba com coração, paleta grafite, bronze, prata e azul-água, e ícone do app com a marca." },
+    { s: "done", t: "Base web + app (PWA)", d: "Um só código para Android, iPhone, iPad, tablet, notebook e desktop. Instalável na tela inicial e funciona offline." },
+    { s: "done", t: "Estrutura de loja completa", d: "Faixa de avisos, menu com submenus, carrossel de banners, Mais vendidos, selos de confiança, vitrines por seção, Promoções, newsletter, Instagram e WhatsApp flutuante." },
+    { s: "done", t: "Catálogo ampliado", d: "48 produtos de exemplo em 11 categorias, temas (cristã, namorados, família, signos…), datas especiais e públicos." },
+    { s: "done", t: "Personalização e carrinho", d: "Campo para nome, frase ou versículo; escolha de tamanho ou modelo; favoritos e carrinho salvos no aparelho." },
+    { s: "done", t: "Pedido pelo WhatsApp", d: "Preço no Pix e em 12x em cada produto, botões Comprar e Espiar, e checkout que envia o pedido completo pelo WhatsApp." },
+    { s: "done", t: "Rastreio, contato e páginas institucionais", d: "Rastreie seu pedido (inclui código dos Correios), Fale conosco, Sobre, Trocas, Entregas e Privacidade." },
+    { s: "done", t: "Seção da loja física", d: "Apresentação do espaço com botões para WhatsApp e rota no mapa." },
+    { s: "wip",  t: "Dados reais da loja", d: "Trocar WhatsApp, endereço, horários, produtos, preços e fotos pelos definitivos." },
+    { s: "todo", t: "Domínio e publicação", d: "Colocar no ar com endereço próprio (ex.: marnstore.com.br) e HTTPS." },
+    { s: "todo", t: "Pagamento online", d: "Pix automático e cartão via Mercado Pago, PagSeguro ou similar." },
+    { s: "todo", t: "Painel administrativo", d: "Cadastrar produtos, fotos e pedidos sem mexer em código." },
+    { s: "todo", t: "Google Play e App Store (opcional)", d: "Publicar o mesmo app nas lojas oficiais." }
+  ],
+  need: [
+    "Número de WhatsApp que vai receber os pedidos",
+    "Endereço e horário de funcionamento da loja física",
+    "Fotos dos produtos e do espaço (prateleiras, mezanino, expositor)",
+    "Lista de produtos com preços reais",
+    "Logo em arquivo vetorial (SVG ou PDF), se tiverem, para ficar ainda mais nítida",
+    "Instagram e outras redes"
+  ],
+  log: [
+    { d: "21/10/2026", t: "App publicado em tela cheia para testar em outros aparelhos; pedido abre o WhatsApp com um toque." },
+    { d: "21/10/2026", t: "Logo e paleta oficiais aplicadas: grafite, bronze, prata e azul-água." },
+    { d: "21/10/2026", t: "Nova estrutura de loja inspirada em lojas de presentes personalizados, com catálogo de 48 produtos." },
+    { d: "21/10/2026", t: "Paleta da marca, públicos e loja física aplicados ao app." },
+    { d: "21/10/2026", t: "Catálogo trocado para canecas, camisetas, bíblias e kits presente com personalização." },
+    { d: "21/10/2026", t: "Base do app criada e testada em celular, tablet e desktop." }
+  ]
+};
+const LABEL = { done: "Concluído", wip: "Em andamento", todo: "Planejado" };
+const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+
+const done = PROJECT.steps.filter(x => x.s === "done").length;
+const wip = PROJECT.steps.filter(x => x.s === "wip").length;
+const pct = Math.round((done + wip * 0.5) / PROJECT.steps.length * 100);
+document.getElementById("pct").innerHTML = pct + "<small>%</small>";
+document.getElementById("pct-bar").style.width = pct + "%";
+document.getElementById("pct-txt").textContent = `${done} de ${PROJECT.steps.length} etapas concluídas`;
+document.getElementById("updated").textContent = PROJECT.updated;
+document.getElementById("steps").innerHTML = PROJECT.steps.map(x => `
+  <li class="step ${x.s}">
+    <span class="dot">${x.s === "done" ? "✓" : x.s === "wip" ? "…" : ""}</span>
+    <div><h3>${esc(x.t)}</h3><p>${esc(x.d)}</p></div>
+    <span class="chip">${LABEL[x.s]}</span>
+  </li>`).join("");
+document.getElementById("need").innerHTML = PROJECT.need.map(n => `<li>${esc(n)}</li>`).join("");
+document.getElementById("log").innerHTML = PROJECT.log.map(l => `<li><time>${esc(l.d)}</time>${esc(l.t)}</li>`).join("");
+
+// Pré-visualização em tamanhos reais, reduzida para caber na tela
+const SIZES = { phone: [390, 760], tablet: [820, 1000], desktop: [1280, 760] };
+let current = "phone";
+try { current = localStorage.getItem("marn-dev") || "phone"; } catch {}
+function fit() {
+  const [w, h] = SIZES[current];
+  const device = document.getElementById("device"), frame = document.getElementById("app"), scaler = document.getElementById("scaler");
+  device.className = "device" + (current === "desktop" ? " desktop" : "");
+  frame.style.width = w + "px"; frame.style.height = h + "px";
+  const pad = current === "desktop" ? 16 : 24;
+  const avail = scaler.clientWidth;
+  const scale = Math.min(1, avail / (w + pad));
+  device.style.transform = `scale(${scale})`;
+  scaler.style.height = ((h + pad + (current === "desktop" ? 20 : 0)) * scale) + "px";
+  document.querySelectorAll("[data-dev]").forEach(b => b.setAttribute("aria-pressed", b.dataset.dev === current));
+}
+document.querySelectorAll("[data-dev]").forEach(b => b.addEventListener("click", () => {
+  current = b.dataset.dev; try { localStorage.setItem("marn-dev", current); } catch {}
+  fit();
+}));
+addEventListener("resize", fit);
+fit();
+</script>
+
+</body>
+</html>
